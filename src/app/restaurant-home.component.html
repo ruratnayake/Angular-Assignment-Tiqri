@@ -1,0 +1,52 @@
+<div class="py-5 text-white opaque-overlay" style="background-image: url(&quot;http://goldwallpapers.com/uploads/posts/free-wallpaper-food/free_wallpaper_food_003.jpg&quot;);">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">&nbsp;</div>
+            <div class="col-md-6">
+                <h2>Where will you eat today ?</h2>
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <ng2-completer class="form-control" style="width: 400px" placeholder="Enter city name..." [(ngModel)]="cityName" (selected)="search()"
+                            (keyup.enter)="search()" [datasource]="cities" [minSearchLength]="0" [openOnFocus]='true'></ng2-completer>
+                        <!-- <input type="text" class="form-control input-lg" placeholder="Enter city name..." [(ngModel)]="cityName" (keyup.enter)="search()" /> -->
+                        <input type="button" class="btn btn-default" value="Search" (click)="search()">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">&nbsp;</div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md8">
+                <ul>
+                    <li *ngFor='let c of topCuisines' class='media restaurant'>
+                        <a href="#" class="img-holder pull-left" style="background-image:url({{c.featured_image}})"></a>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <a href="">{{c.restaurant?.name}}</a>
+                            </h4>
+                            <div class="detail clearfix">
+                                <p>
+                                    Location: {{c.restaurant?.location.address}}</p>
+                                <p>
+                                    Cuisines: {{c.restaurant?.cuisines}}
+                                </p>
+                                <p>
+                                    Avg. Cost for two: {{c.restaurant?.currency}} {{c.restaurant?.average_cost_for_two}}
+                                </p>
+
+                                <div class="rating-holder">
+                                    <span class="review_count">
+                                        <strong>{{c.restaurant?.user_rating?.votes}}</strong> reviews :P</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-2">&nbsp;</div>
+        </div>
+    </div>
+</div>

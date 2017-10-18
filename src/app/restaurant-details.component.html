@@ -1,0 +1,104 @@
+<div class="py-1 text-white opaque-overlay">
+    <div class="container py-1" style="background-color: grey;">
+        <div class="row form-horizontal py-2" style="padding-bottom: 0 !important;">
+            <div class="form-group col-md-12">
+                <h2>{{restaurant?.name}}</h2>
+                <input type="button" (click)="goBack()" class="btn btn-secondary" value="<<" title="Go back to previous page" />
+                <span>{{restaurant?.location?.address}}</span>
+                <span>{{invalidId}}</span>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-1" style="background-color: #eaeaea;" *ngIf="restaurant">
+    <div class="row">
+        <div class="col-md-8" [style.background]="'url(' + restaurant?.featured_image + ')'" style="width:100%;height: 400px;background-size:contain !important;"></div>
+        <div class="col-md-4" style="width:100%;height: 400px;background-size:contain !important;">
+            <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" style="height: 400px;">
+                <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="false"></agm-marker>
+            </agm-map>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <h4>Restaurant Information</h4>
+            <p>
+                <strong>Serving Cuisines:</strong> {{restaurant?.cuisines}}</p>
+            <p>
+                <strong>Price Range:</strong> {{restaurant?.price_range}}</p>
+            <span>
+                <strong>Price Range:</strong> Approx {{restaurant?.currency + ' ' + restaurant?.average_cost_for_two}} per two people.</span>
+            <h4>User Ratings</h4>
+            <span>Aggregate Rating : {{restaurant?.user_rating?.aggregate_rating}} [Votes: {{restaurant?.user_rating?.votes}}]</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <div>
+                <div *ngFor='let r of reviews?.user_reviews' class="media-body">
+                    <tasty-review [review]="r.review"></tasty-review>
+                </div>
+            </div>
+            <input *ngIf="!this.ratingOptions" type="button" class="btn btn-success" value="Write Review" (click)="writeReview()" />
+        </div>
+    </div>
+    <div class="row" *ngIf="this.ratingOptions">
+        <div class="col-md-7">
+            <h4>Write Review</h4>
+            <div class="row">
+                <div class="md-1">&nbsp;</div>
+                <div class="md-10">
+                    <form #reviewForm="ngForm">
+                        <table>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>Rating :</td>
+                                <td>
+                                    <select id='rating' name='rating' #rating="ngModel" [(ngModel)]="selectedRating" (change)="NewRatingChange()" required>
+                                        <option *ngFor='let option of ratingOptions' [ngValue]="option">{{option.rating}}</option>
+                                    </select>
+                                    <span *ngIf='selectedRating'>({{this.newReview?.rating_text}})</span>
+                                    <div *ngIf="rating.dirty && rating.hasError('required')" class='alert alert-danger'>Rating is a required field.</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>Review :</td>
+                                <td>
+                                    <textarea id='review' name="review" #review="ngModel" rows="4" [style.width.px]='450' [(ngModel)]='newReview.review_text'
+                                        required></textarea>
+                                    <div *ngIf="review.dirty && review.hasError('required')" class='alert alert-danger'>Review is a required field.</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <input type="button" class="btn btn-success" value="Post Review" (click)="postReview()" [disabled]='!reviewForm.form.valid'
+                                        [ngClass]='reviewForm.form.valid ? "" : "not-allowed"' />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="md-1">&nbsp;</div>
+            </div>
+            <div>
+                <div class="media-body">
+                    <h5>Review Preview</h5>
+                    <tasty-review [review]="newReview"></tasty-review>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="detail clearfix media-body">
+
+            </div>
+        </div>
+    </div>

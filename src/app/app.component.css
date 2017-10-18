@@ -1,0 +1,16 @@
+.img-holder{
+    width: 140px;
+    height: 85px;
+    background-color: #bcc2c4;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.media-body{
+    overflow:hidden;
+    zoom:1;
+}
+
+.not-allowed{
+    cursor: not-allowed;
+}

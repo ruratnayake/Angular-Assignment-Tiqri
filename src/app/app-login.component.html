@@ -1,0 +1,31 @@
+<!-- <toaster-container></toaster-container> -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h1 class="text-center login-title" style="margin-top: 20px;">Sign in</h1>
+            <div class="account-wall">
+                <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
+                    alt="">
+                <form  name='loginForm' #loginForm="ngForm" class="form-signin">
+                    <input id='username' name='username'  type="text" class="form-control input-margin" placeholder="Email \ username" [(ngModel)]='username'
+                        required autofocus>
+                    <input name='password' type="password" class="form-control v" placeholder="Password" [(ngModel)]='password' required>
+                    <div *ngIf='invalidLogin' class='alert alert-danger'>Invalid username or password.</div>
+
+                    <input type="button" class="btn btn-lg btn-primary btn-block input-margin" type="submit" (click)="signInUser()" value="Sign in"
+                        [ngClass]='loginForm.form.valid ? "" : "not-allowed"'
+                        title="{{(loginForm.form.valid) ? 'Sign In' : 'Type Username and password to sign in'}}" [disabled]="!loginForm.form.valid"
+                    />
+                    <label class="checkbox pull-left">
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                    <a [routerLink]="['/login']" class="pull-right need-help">Need help? </a>
+                    <span class="clearfix"></span>
+                </form>
+            </div>
+            <a [routerLink]="['/login']" class="text-center new-account">Create an account </a>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

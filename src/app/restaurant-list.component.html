@@ -1,0 +1,62 @@
+<div class="py-1 text-white opaque-overlay">
+    <div class="container py-1" style="background-color: grey;">
+        <div class="row form-horizontal py-2" style="padding-bottom: 0 !important;">
+            <div class="col-md-2">&nbsp;</div>
+            <div class="form-group col-md-8">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter your city..." [(ngModel)]="city">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" (keyup-enter)="getLocationInformation()" (click)="getLocationInformation()">Search</button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-2">&nbsp;</div>
+        </div>
+    </div>
+</div>
+
+<div>
+
+    <div class="container py-1" style="background-color: #eaeaea;">
+        <div *ngIf="invalidLocation">
+            <h5>Subzone\ city of name '{{city}}' not found, retry ...</h5>
+        </div>
+        <div *ngIf="topRestaurants && !invalidLocation" class="row">
+            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md-8">
+                <h3>Top 10 Cuisines of
+                    <strong>{{subzone | uppercase }}</strong>
+                </h3>
+                <ul>
+                    <li *ngFor='let c of topRestaurants' class='media restaurant' style="border-bottom: 2px solid #000000; padding: 0 0 10px 0;">
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <a [routerLink]="['/restaurant-details', c.restaurant.id]">{{c.restaurant?.name}}</a>
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-4" [style.background]="'url(' + c.restaurant?.featured_image + ')'" style="width:100%;height: 200px;background-size:contain !important;"></div>
+                                <div class="col-md-8">
+                                    <div class="detail clearfix media-body">
+                                        <p>
+                                            Location: {{c.restaurant?.location.address}}</p>
+                                        <p>
+                                            Cuisines: {{c.restaurant?.cuisines}}
+                                        </p>
+                                        <p>
+                                            Avg. Cost for two: {{c.restaurant?.currency}} {{c.restaurant?.average_cost_for_two}}
+                                        </p>
+                                        <div class="rating-holder">
+                                            <span class="review_count">
+                                                <strong>0</strong> reviews</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-2">&nbsp;</div>
+        </div>
+    </div>
+</div>
